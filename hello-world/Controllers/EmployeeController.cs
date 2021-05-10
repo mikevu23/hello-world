@@ -26,5 +26,28 @@ namespace hello_world.Controllers
 
             return Ok(employees);
         }
+        [HttpGet("/api/employees/{id}")]
+        public ActionResult GetEmployeeById(int id) {
+            List<Employee> employees = new List<Employee>();
+            List<string> names = new List<string> { "Michael", "Vince", "Lizet", "Ivette", "Jimy", "Bob", "Tom" };
+            for (int i = 0; i < names.Count; i++)
+            {
+                Employee employee = new Employee
+                {
+                    Name = names[i],
+                    Number = i
+                };
+
+                employees.Add(employee);
+            }
+
+            Employee employeeMatchingID = employees.Find(e => e.Number == id);
+
+            if (employeeMatchingID.Number == 0) {
+                return BadRequest();
+            }
+
+            return Ok(employeeMatchingID);
+        }
     }
 }
